@@ -1,12 +1,15 @@
 #include <iostream>
 #include <pcap.h>
 #include <getopt.h>
+#include <string>
 #include <cstdlib>	// atoi and stuff
 
+// Get opts parameter definitions
 #define optarg_no 0
 #define optarg_required 1
 #define optarg_optinal 2
 
+// Default values for parameters definition
 #define defaultValue_input "stdin"
 #define defaultValue_collectorAddress "127.0.0.1:2055"
 #define defaultValue_interval 300
@@ -15,6 +18,8 @@
 
 
 using namespace std;
+
+
 
 const struct option longopts[] = 
 {
@@ -62,46 +67,77 @@ void testParamInit(T_Parameters params)
 	cout << "Given: " << params.maxFlows 			<< endl << "Expected: " << defaultValue_maxflows 			<< endl << "==========" << endl;
 }
 
-//string collectorAddress = "127.0.0.1:2055";
 
 int main(int argc, char * argv[])
 {
 
+
+
+
+
+	
+	// Sets default values for params
+	ParamInit();
+	
+
+	// Handles explicitly given params
 	int goarg = 0;
 	int index;
-
+	
 	while(goarg != -1)
 	{
 		goarg = getopt_long(argc, argv, "i:c:I:t:m:", longopts, &index);
 
+
 		switch(goarg)
 		{
-		case 'i':
-        cout << "You hit i with:" << optarg << endl;
-        Parameters.inputFile = optarg;
-        break;
-      	case 'c':
-        cout << "You hit c with" << optarg << endl;
-        Parameters.collectorAddress = optarg;
-        break;
-        case 'I':
-        cout << "You hit Interval with " << optarg << endl;
-        Parameters.interval = atoi(optarg);
-        break;
-        case 't':
-        cout << "You hit timeout with " << optarg << endl;
-        Parameters.timeout = atoi(optarg);
-        break;
-        case 'm':
-        cout << "You hit maxflows with " << optarg << endl;
-        Parameters.maxFlows = atoi(optarg);
-        break;
+			case 'i':
+		        cout << "You hit i with:" << optarg << endl;
+		        Parameters.inputFile = optarg;
+	        break;
+
+	      	case 'c':
+		        cout << "You hit c with" << optarg << endl;
+		        Parameters.collectorAddress = optarg;
+	        break;
+
+	        case 'I':
+		        cout << "You hit Interval with " << optarg << endl;
+		        Parameters.interval = atoi(optarg);
+	        break;
+
+	        case 't':
+		        cout << "You hit timeout with " << optarg << endl;
+		        Parameters.timeout = atoi(optarg);
+	        break;
+
+	        case 'm':
+		        cout << "You hit maxflows with " << optarg << endl;
+		        Parameters.maxFlows = atoi(optarg);
+	        break;
 		}
 	}
 
-	ParamInit();
-	testParamInit(Parameters);
+	// Debug only - prints default & current values of params
+	//testParamInit(Parameters);
 
-	//cout << "Hello world!\n" << collectorAddress << endl;
+
+	string testFile = "testoutputfile.pcap";
+	char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+
+	pcap_t * pcap = pcap_open_offline(testFile.c_str(), pcapErrorBuffer);
+
+	struct pcap_pkthdr *header;
+	const u_char *data;
+
+	u_int packetCount = 0;
+
+	while(int returnValue = pcap_next_ex(pcap, &header, &data) >= 0)
+	{
+		cout << "Packet number: " << ++packetCount << endl;
+	}
+
+
+
 	return 0;
 }
