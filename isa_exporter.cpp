@@ -122,7 +122,7 @@ int main(int argc, char * argv[])
 	//testParamInit(Parameters);
 
 
-	string testFile = "testoutputfile.pcap";
+	string testFile = "SamplePcaps/testoutputfile.pcap";
 	char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
 	pcap_t * pcap = pcap_open_offline(testFile.c_str(), pcapErrorBuffer);
