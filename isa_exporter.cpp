@@ -9,6 +9,8 @@
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
+#include <netinet/ip_icmp.h>
+#include <netinet/igmp.h>
 #include <netinet/if_ether.h>
 #include <arpa/inet.h>	// inet_ntoa
 #include <sys/socket.h>
@@ -59,8 +61,14 @@ struct T_Flows
 
 	// doba vzniku
 	// doba trvání
-	u_int	packetCount;
-	u_int 	bytesTransfered;
+
+	struct timeval startTime;
+	struct timeval lastPacketArrival;
+	struct timeval endTime;
+
+
+	u_int	packetCount = 0;
+	u_int 	bytesTransfered = 0;
 
 	bool	flowExpired;
 
@@ -71,8 +79,9 @@ struct T_Flows
 
 T_Parameters Parameters;
 vector<T_Flows> processedFlows;
+vector<T_Flows> expiredFlows;
 
-void createFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered)
+/*void createFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, struct timeval startTime)
 {
 	T_Flows newFlow;
 	newFlow.sourceAddress = sourceAddress;
@@ -83,11 +92,17 @@ void createFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourc
 	newFlow.bytesTransfered = bytesTransfered;
 	newFlow.packetCount++;
 	newFlow.flowExpired = false;
+
+	// Startime + last packet arrival
+	newFlow.startTime.tv_sec = startTime.tv_sec;
+	newFlow.startTime.tv_usec = startTime.tv_usec;
+	newFlow.lastPacketArrival.tv_sec = startTime.tv_sec;
+	newFlow.lastPacketArrival.tv_usec = startTime.tv_usec;
 
 	processedFlows.push_back(newFlow);
-}
+}*/
 
-void createDebugFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, const char* prettySourceAddress, const char* prettyDestinationAddress)
+void createDebugFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, struct timeval startTime, const char* prettySourceAddress, const char* prettyDestinationAddress)
 {
 	T_Flows newFlow;
 	newFlow.sourceAddress = sourceAddress;
@@ -98,24 +113,39 @@ void createDebugFlow(in_addr sourceAddress, in_addr destinationAddress, u_short 
 	newFlow.bytesTransfered = bytesTransfered;
 	newFlow.packetCount++;
 	newFlow.flowExpired = false;
+
+	// Startime + last packet arrival
+	newFlow.startTime.tv_sec = startTime.tv_sec;
+	newFlow.startTime.tv_usec = startTime.tv_usec;
+	newFlow.lastPacketArrival.tv_sec = startTime.tv_sec;
+	newFlow.lastPacketArrival.tv_usec = startTime.tv_usec;
 
 	// For debugging purposes, I use pretty source address to be able to compare what am I actually putting in
 	newFlow.prettySourceAddress = prettySourceAddress;
 	newFlow.prettyDestinationAddress = prettyDestinationAddress;
 
-	processedFlows.push_back(newFlow);
+	if(protocolType == 17)
+	{
+		expiredFlows.push_back(newFlow);
+	}
+	else
+	{
+		processedFlows.push_back(newFlow);
+	}
 }
+
+void updateFlow();
 
 void ParamInit();
 void testParamInit(T_Parameters params);
 
 
-
-void processPacket(u_char *args, const struct pcap_pkthdr *pHeader, const u_char *packet);
-
-void processPacket(u_char *args, const struct pcap_pkthdr *pHeader, const u_char *packet)
+void debug_PrintFlowInfo(vector<T_Flows>::iterator it);
+void debug_PrintFlowInfo(vector<T_Flows>::iterator it)
 {
-
+	cout << "Transfered in total: " << it->bytesTransfered  << " (bytes) " << endl;
+	cout << "Packets in this flow: " << it->packetCount << endl;
+	cout << "Current flow duration: " << (it->lastPacketArrival.tv_sec - it->startTime.tv_sec) << " seconds since the begining of UNIX." << endl;
 }
 
 
@@ -166,18 +196,10 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	// Debug only - prints default & current values of params 	// TODO: Remove this line
-	//testParamInit(Parameters);								// TODO: Remove this line
-
-
 /// OPENING A PCAP FILE
 
-	// Static testfile, TODO: Replace this with real input from --input/-i param
-	//string testFile = "SamplePcaps/testoutputfile.pcap";
-	
 	// String for Error that may occur while reading pcap file
 	char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
-
 
 	/// Structures and variables for records from pcap file
 
@@ -190,16 +212,16 @@ int main(int argc, char * argv[])
 	// Pointer to ethernet header
 	struct ether_header *eptr;
 
-	// Handle to file (and on online-exporter it would be device) from which the pcap stream is coming
+	// Handle to file (and on online-exporter it would be device) which the pcap stream is coming from
 	pcap_t *handle;
 
-	// TODO: Figure this out
-	//int ether_offset = 0;
 
+	// Structures for different headers
 	struct ip *my_ip;
 	struct tcphdr *my_tcp;
 	struct udphdr *my_udp;
-
+	struct icmphdr *my_icmp;
+	struct igmphdr *my_igmp;
 
 	// Counters for each supported protocol
 	// TODO: Remove this (or maybe just reposition)
@@ -212,7 +234,7 @@ int main(int argc, char * argv[])
 
 
 
-	// New flow record variables
+	// New flow record variables TODO: Clarify this section
 	const char *prettySourceAddress, *prettyDestinationAddress;
 	in_addr sourceAddress, destinationAddress;
 	u_short sourcePort, destinationPort;
@@ -241,6 +263,9 @@ int main(int argc, char * argv[])
 	{
 		packetCount++;
 
+		// Current packet information printed out
+		cout << "#" << packetCount << " Packet length: " << header.len << " (bytes) | Time received: " << ctime((const time_t*)&header.ts.tv_sec);
+
 		eptr = (struct ether_header *) packet;
 
 		switch(ntohs(eptr->ether_type))
@@ -254,167 +279,279 @@ int main(int argc, char * argv[])
 					case 1: // ICMP
 						cout << "ICMP PACKET" << endl;
 						icmppacket++;
+
+						my_icmp = (struct icmphdr *) (my_ip + my_ip->ip_hl*4);
+
+					// Get all 5 values to identify flow
+
+						// Data load
+						sourceAddress		= (in_addr) my_ip->ip_src;
+						destinationAddress 	= (in_addr) my_ip->ip_dst; 
+						sourcePort 			= (u_short) 0;
+						destinationPort 	= (u_short) 0;
+						protocolType		= 1;	// Given by case
+						bytesTransfered		= header.len;
+
+						// TESTING CORRECTNESS OF DATA
+							// Creation of pretty (printable) destination & source address
+							// inet_ntoa (and ether_ntoa) returns value in a static buffer that is overwritten by subsequent call, therefore I need to copy string somewhere first
+
+							auxBuff = inet_ntoa(my_ip->ip_src);
+							prettySourceAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
+
+							auxBuff = inet_ntoa(my_ip->ip_dst);
+							prettyDestinationAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
+
+							cout << "Source address: " << prettySourceAddress << " Destination address: " << prettyDestinationAddress << endl;
+							cout << "Source port: "	<<  sourcePort	<< " Destination port: " << destinationPort << endl;
+					
+					// Check if flow exists
+						
+						// In case that vector is empty, I add T_Flows record right away
+						if(processedFlows.empty())
+						{
+							// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
+							createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+	
+							// Debug only TODO: Remove this line
+							cout << "ADDED FIRST RECORD TO processedFlows (current processedflows: " << processedFlows.size() << ")" << endl;
+						}
+						// Flows are not empty
+						else
+						{
+
+							// Initialize on true, set to false if flow exists (and is discovered by for loop)
+							bool createNewICMPflow = true;
+
+							// Iterating through vector of flows
+							for(vector<T_Flows>::iterator it = processedFlows.begin(); it != processedFlows.end(); ++it)
+							{
+
+								if(it->sourceAddress.s_addr == sourceAddress.s_addr && it->destinationAddress.s_addr == destinationAddress.s_addr && it->sourcePort == sourcePort && it->destinationPort == destinationPort && it->protocolType == protocolType)
+								{
+									// TRUE: Update metrics in the flow 
+									// TODO: DO THAT
+									cout << "JUST RUN OVER THE EXISTING FLOW (S: " << it->prettySourceAddress << ":" << it->sourcePort <<", D:" << it->prettyDestinationAddress << ":"<< it->destinationPort <<") (current processedflows: " << processedFlows.size() << ")"  << endl;
+									
+									// Do not create another flow record, terminate the for loop (optimalization)
+									createNewICMPflow = false;
+									break;
+								}
+							}
+
+							// Condition is true when no record for the tuple of sourceAddress, destinationAddress, sourcePort, destinationPort & protocolType is found
+							if(createNewICMPflow)
+							{
+									// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
+									// Creates flow record for the current tuple
+									createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+									
+									// Set need for creating new flow back to false
+									createNewICMPflow = false;
+									// TODO: Debug only, remove this
+									cout << "ADDED NEW FLOW TO processedFlows (S: " << prettySourceAddress << ":" << sourcePort <<", D:" << prettyDestinationAddress << ":"<< destinationPort <<") (current processedflows: " << processedFlows.size() << ")" << endl;
+							}
+						}
 					break;
+
 					case 2: // IGMP
 						cout << "IGMP PACKET" << endl;
 						igmptpacket++;
+
+						my_igmp = (struct igmphdr *) (my_ip + my_ip->ip_hl*4);
+
+						// Get all 5 values to identify flow
+
+						// Data load
+						sourceAddress		= (in_addr) my_ip->ip_src;
+						destinationAddress 	= (in_addr) my_ip->ip_dst; 
+						sourcePort 			= (u_short) 0;
+						destinationPort 	= (u_short) 0;
+						protocolType		= 2;	// Given by case
+						bytesTransfered		= header.len;
+
+						// TESTING CORRECTNESS OF DATA
+							// Creation of pretty (printable) destination & source address
+							// inet_ntoa (and ether_ntoa) returns value in a static buffer that is overwritten by subsequent call, therefore I need to copy string somewhere first
+
+							auxBuff = inet_ntoa(my_ip->ip_src);
+							prettySourceAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
+
+							auxBuff = inet_ntoa(my_ip->ip_dst);
+							prettyDestinationAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
+
+							cout << "Source address: " << prettySourceAddress << " Destination address: " << prettyDestinationAddress << endl;
+							cout << "Source port: "	<<  sourcePort	<< " Destination port: " << destinationPort << endl;
+
+						// Check if flow exists
+						
+						// In case that vector is empty, I add T_Flows record right away
+						if(processedFlows.empty())
+						{
+							// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
+							createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+	
+							// Debug only TODO: Remove this line
+							cout << "ADDED FIRST RECORD TO processedFlows (current processedflows: " << processedFlows.size() << ")" << endl;
+						}
+						// Flows are not empty
+						else
+						{
+
+							// Initialize on true, set to false if flow exists (and is discovered by for loop)
+							bool createNewIGMPFlow = true;
+
+							// Iterating through vector of flows
+							for(vector<T_Flows>::iterator it = processedFlows.begin(); it != processedFlows.end(); ++it)
+							{
+
+								if(it->sourceAddress.s_addr == sourceAddress.s_addr && it->destinationAddress.s_addr == destinationAddress.s_addr && it->sourcePort == sourcePort && it->destinationPort == destinationPort && it->protocolType == protocolType)
+								{
+									// TRUE: Update metrics in the flow 
+									// TODO: DO THAT
+									cout << "JUST RUN OVER THE EXISTING FLOW (S: " << it->prettySourceAddress << ":" << it->sourcePort <<", D:" << it->prettyDestinationAddress << ":"<< it->destinationPort <<") (current processedflows: " << processedFlows.size() << ")"  << endl;
+									
+									// Do not create another flow record, terminate the for loop (optimalization)
+									createNewIGMPFlow = false;
+									break;
+								}
+							}
+
+							// Condition is true when no record for the tuple of sourceAddress, destinationAddress, sourcePort, destinationPort & protocolType is found
+							if(createNewIGMPFlow)
+							{
+									// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
+									// Creates flow record for the current tuple
+									createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+									
+									// Set need for creating new flow back to false
+									createNewIGMPFlow = false;
+									// TODO: Debug only, remove this
+									cout << "ADDED NEW FLOW TO processedFlows (S: " << prettySourceAddress << ":" << sourcePort <<", D:" << prettyDestinationAddress << ":"<< destinationPort <<") (current processedflows: " << processedFlows.size() << ")" << endl;
+							}
+						}						
+
 					break;
 					case 6: // TCP
-					
-					cout << "TCP PACKET" << endl;
-					tcppacket++;
+						tcppacket++;
 
-					my_tcp = (struct tcphdr *) (my_ip + my_ip->ip_hl*4);	 
-					
-					// Get all 5 values to identify flow
-
-						// Data load
-						sourceAddress		= (in_addr) my_ip->ip_src;
-						destinationAddress 	= my_ip->ip_dst; 
-						sourcePort 			= (u_short) my_tcp->th_sport;
-						destinationPort 	= (u_short) my_tcp->th_dport;
-						protocolType		= 6;	// Given by case
-						bytesTransfered		= header.len;
-
-						// TESTING CORRECTNESS OF DATA
-							// Creation of pretty (printable) destination & source address
-							// inet_ntoa (and ether_ntoa) returns value in a static buffer that is overwritten by subsequent call, therefore I need to copy string somewhere first
-
-							auxBuff = inet_ntoa(my_ip->ip_src);
-							prettySourceAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
-
-							auxBuff = inet_ntoa(my_ip->ip_dst);
-							prettyDestinationAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
-
-							cout << "Source address: " << prettySourceAddress << " Destination address: " << prettyDestinationAddress << endl;
-							cout << "Source port: "	<<  sourcePort	<< " Destination port: " << destinationPort << endl;
-
-					// Check if flow exists
+						my_tcp = (struct tcphdr *) (my_ip + my_ip->ip_hl*4);	 
 						
-						// In case that vector is empty, I add T_Flows record right away
-						if(processedFlows.empty())
-						{
-							// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
-							createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, prettySourceAddress, prettyDestinationAddress);
-	
-							// Debug only TODO: Remove this line
-							cout << "ADDED FIRST RECORD TO processedFlows (current processedflows: " << processedFlows.size() << ")" << endl;
-						}
-						// Flows are not empty
-						else
-						{
+						// Get all 5 values to identify flow
 
-							// Initialize on true, set to false if flow exists (and is discovered by for loop)
-							bool createNewFlow = true;
+							// Data load
+							sourceAddress		= (in_addr) my_ip->ip_src;
+							destinationAddress 	= my_ip->ip_dst; 
+							sourcePort 			= (u_short) my_tcp->th_sport;
+							destinationPort 	= (u_short) my_tcp->th_dport;
+							protocolType		= 6;	// Given by case
+							bytesTransfered		= header.len;
 
-							// Iterating through vector of flows
-							for(vector<T_Flows>::iterator it = processedFlows.begin(); it != processedFlows.end(); ++it)
+							// TESTING CORRECTNESS OF DATA
+								// Creation of pretty (printable) destination & source address
+								// inet_ntoa (and ether_ntoa) returns value in a static buffer that is overwritten by subsequent call, therefore I need to copy string somewhere first
+
+								auxBuff = inet_ntoa(my_ip->ip_src);
+								prettySourceAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
+
+								auxBuff = inet_ntoa(my_ip->ip_dst);
+								prettyDestinationAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
+
+								//cout << "Source address: " << prettySourceAddress << " Destination address: " << prettyDestinationAddress << endl;
+								//cout << "Source port: "	<<  sourcePort	<< " Destination port: " << destinationPort << endl;
+								cout << "TCP PACKET " << prettySourceAddress << ":" << sourcePort << " -> " << prettyDestinationAddress << ":" << destinationPort;
+
+						// Check if flow exists
+							
+							// In case that vector is empty, I add T_Flows record right away
+							if(processedFlows.empty())
+							{
+								// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
+								createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+		
+								// Debug only TODO: Remove this line
+								cout << " ...added first record to processedFlows (" << processedFlows.size() << ")" << endl;
+							}
+							// Flows are not empty
+							else
 							{
 
-								if(it->sourceAddress.s_addr == sourceAddress.s_addr && it->destinationAddress.s_addr == destinationAddress.s_addr && it->sourcePort == sourcePort && it->destinationPort == destinationPort && it->protocolType == protocolType)
+								// Initialize on true, set to false if flow exists (and is discovered by for loop)
+								bool createNewFlow = true;
+
+								// Iterating through vector of flows
+								for(vector<T_Flows>::iterator it = processedFlows.begin(); it != processedFlows.end(); ++it)
 								{
-									// TRUE: Update metrics in the flow 
-									// TODO: DO THAT
-									cout << "JUST RUN OVER THE EXISTING FLOW (S: " << it->prettySourceAddress << ":" << it->sourcePort <<", D:" << it->prettyDestinationAddress << ":"<< it->destinationPort <<") (current processedflows: " << processedFlows.size() << ")"  << endl;
-									
-									// Do not create another flow record, terminate the for loop (optimalization)
-									createNewFlow = false;
-									break;
+
+									if(it->sourceAddress.s_addr == sourceAddress.s_addr && it->destinationAddress.s_addr == destinationAddress.s_addr && it->sourcePort == sourcePort && it->destinationPort == destinationPort && it->protocolType == protocolType)
+									{
+										// TRUE: Update metrics in the flow 
+										// TODO: DO THAT
+
+										// updates bytes transfered in total
+										it->bytesTransfered = it->bytesTransfered+bytesTransfered;
+										it->packetCount = it->packetCount+1;
+										it->lastPacketArrival.tv_sec = header.ts.tv_sec;
+										it->lastPacketArrival.tv_usec = header.ts.tv_usec;
+
+
+										cout << " ... already exists, updated statistics of processedFlows (" << processedFlows.size() << ")"  << endl;
+
+										cout << "Packets in this flow: " << it->packetCount << endl;
+										cout << "Transfered in total: " << it->bytesTransfered  << " (bytes) " << endl;
+										cout << "Connection time: " << (it->lastPacketArrival.tv_sec - it->startTime.tv_sec) << " (" << it->lastPacketArrival.tv_sec << " - " << it->startTime.tv_sec << ") [seconds]" << endl;
+										cout << "Connection time: " << (it->lastPacketArrival.tv_usec - it->startTime.tv_usec) << " (" << it->lastPacketArrival.tv_usec << " - " << it->startTime.tv_usec << ") [miliseconds]" << endl;
+
+										// Do not create another flow record, terminate the for loop (optimalization)
+										createNewFlow = false;
+										break;
+									}
+								}
+
+								// Condition is true when no record for the tuple of sourceAddress, destinationAddress, sourcePort, destinationPort & protocolType is found
+								if(createNewFlow)
+								{
+										// TODO: Replace this line with createFlow(...);
+										// Creates flow record for the current tuple
+										createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+										
+										// Set need for creating new flow back to false
+										createNewFlow = false;
+										
+										// TODO: Debug only, remove this
+										cout << " ... new flow record created in processedFlows (" << processedFlows.size() << ")" << endl;
 								}
 							}
-
-							// Condition is true when no record for the tuple of sourceAddress, destinationAddress, sourcePort, destinationPort & protocolType is found
-							if(createNewFlow)
-							{
-									// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
-									// Creates flow record for the current tuple
-									createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, prettySourceAddress, prettyDestinationAddress);
-									
-									// Set need for creating new flow back to false
-									createNewFlow = false;
-									// TODO: Debug only, remove this
-									cout << "ADDED NEW FLOW TO processedFlows (S: " << prettySourceAddress << ":" << sourcePort <<", D:" << prettyDestinationAddress << ":"<< destinationPort <<") (current processedflows: " << processedFlows.size() << ")" << endl;
-							}
-						}
 					break;
 
-					case 17: // UDP
-						cout << "UDP PACKET" << endl;
+					case 17: 	// UDP // TODO Defines
 						udppacket++;
-
 						my_udp = (struct udphdr *) (my_ip + my_ip->ip_hl*4);
 
-
-					// Get all 5 values to identify flow
-						
-						// Data load
-						sourceAddress		= (in_addr) my_ip->ip_src;
-						destinationAddress 	= my_ip->ip_dst; 
-						sourcePort 			= (u_short) my_udp->uh_sport;
-						destinationPort 	= (u_short) my_udp->uh_dport;
-						protocolType		= 6;	// Given by case
-						bytesTransfered		= header.len;
+						// Get all 5 values to identify flow
+						sourceAddress		= 	(in_addr) my_ip->ip_src;
+						destinationAddress 	= 	my_ip->ip_dst; 
+						sourcePort 			= 	(u_short) my_udp->uh_sport;
+						destinationPort 	= 	(u_short) my_udp->uh_dport;
+						protocolType		= 	17;	
+						bytesTransfered		= 	header.len;
 
 						// TESTING CORRECTNESS OF DATA
+							
 							// Creation of pretty (printable) destination & source address
 							// inet_ntoa (and ether_ntoa) returns value in a static buffer that is overwritten by subsequent call, therefore I need to copy string somewhere first
-
 							auxBuff = inet_ntoa(my_ip->ip_src);
 							prettySourceAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
 
 							auxBuff = inet_ntoa(my_ip->ip_dst);
 							prettyDestinationAddress = strcpy(new char[strlen(auxBuff)+1], auxBuff);
 
-							cout << "Source address: " << prettySourceAddress << " Destination address: " << prettyDestinationAddress << endl;
-							cout << "Source port: "	<<  sourcePort	<< " Destination port: " << destinationPort << endl;
+							// Creation & Information about whats going on
+							createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+							cout << "UDP PACKET " << prettySourceAddress << ":" << sourcePort << " -> " << prettyDestinationAddress << ":" << destinationPort  << " ... added to expiredFlows (" << expiredFlows.size() << ")" << endl;
+							
+												
 
-					// Check if flow exists
-						
-						// In case that vector is empty, I add T_Flows record right away
-						if(processedFlows.empty())
-						{
-							// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
-							createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, prettySourceAddress, prettyDestinationAddress);
-	
-							// Debug only TODO: Remove this line
-							cout << "ADDED FIRST RECORD TO processedFlows (current processedflows: " << processedFlows.size() << ")" << endl;
-						}
-						// Flows are not empty
-						else
-						{
-
-							// Initialize on true, set to false if flow exists (and is discovered by for loop)
-							bool createNewUDP = true;
-
-							// Iterating through vector of flows
-							for(vector<T_Flows>::iterator it = processedFlows.begin(); it != processedFlows.end(); ++it)
-							{
-
-								if(it->sourceAddress.s_addr == sourceAddress.s_addr && it->destinationAddress.s_addr == destinationAddress.s_addr && it->sourcePort == sourcePort && it->destinationPort == destinationPort && it->protocolType == protocolType)
-								{
-									// TRUE: Update metrics in the flow 
-									// TODO: DO THAT
-									cout << "JUST RUN OVER THE EXISTING FLOW (S: " << it->prettySourceAddress << ":" << it->sourcePort <<", D:" << it->prettyDestinationAddress << ":"<< it->destinationPort <<") (current processedflows: " << processedFlows.size() << ")"  << endl;
-									
-									// Do not create another flow record, terminate the for loop (optimalization)
-									createNewUDP = false;
-									break;
-								}
-							}
-
-							// Condition is true when no record for the tuple of sourceAddress, destinationAddress, sourcePort, destinationPort & protocolType is found
-							if(createNewUDP)
-							{
-									// TODO: Replace this line with createFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, prettySourceAddress);
-									// Creates flow record for the current tuple
-									createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, prettySourceAddress, prettyDestinationAddress);
-									
-									// Set need for creating new flow back to false
-									createNewUDP = false;
-									// TODO: Debug only, remove this
-									cout << "ADDED NEW FLOW TO processedFlows (S: " << prettySourceAddress << ":" << sourcePort <<", D:" << prettyDestinationAddress << ":"<< destinationPort <<") (current processedflows: " << processedFlows.size() << ")" << endl;
-							}
-						}
 					break;
 
 					default:
@@ -437,7 +574,7 @@ int main(int argc, char * argv[])
 		}
 
 
-		cout << "#" << packetCount << " Packet length: " << header.len << " (bytes) | Time received: " << ctime((const time_t*)&header.ts.tv_sec) << endl;
+		cout << endl;
 	}
 
 
