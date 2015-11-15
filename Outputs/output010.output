@@ -787,7 +787,6 @@ UDP PACKET 213.46.172.36:14640 -> 10.0.2.15:18208 ... added to expiredFlows (116
 UDP PACKET 213.46.172.37:14640 -> 10.0.2.15:18208 ... added to expiredFlows (117)
 
 #225 Packet length: 199 (bytes) | Time received: Fri Nov 13 18:42:09 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.37:0 ... added to expiredFlows (118)
 
 #226 Packet length: 151 (bytes) | Time received: Fri Nov 13 18:42:09 2015
@@ -1269,7 +1268,6 @@ UDP PACKET 213.46.172.37:51393 -> 10.0.2.15:54824 ... added to expiredFlows (221
 UDP PACKET 213.46.172.36:51393 -> 10.0.2.15:54824 ... added to expiredFlows (222)
 
 #372 Packet length: 193 (bytes) | Time received: Fri Nov 13 18:42:09 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (223)
 
 #373 Packet length: 145 (bytes) | Time received: Fri Nov 13 18:42:09 2015
@@ -1773,7 +1771,6 @@ UDP PACKET 213.46.172.36:29649 -> 10.0.2.15:37439 ... added to expiredFlows (327
 UDP PACKET 213.46.172.36:29649 -> 10.0.2.15:37439 ... added to expiredFlows (328)
 
 #521 Packet length: 192 (bytes) | Time received: Fri Nov 13 18:42:10 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (329)
 
 #522 Packet length: 111 (bytes) | Time received: Fri Nov 13 18:42:10 2015
@@ -4267,7 +4264,6 @@ TCP PACKET 10.0.2.15:55589 -> 173.194.122.5:11902 ... new flow record created in
 UDP PACKET 213.46.172.36:55589 -> 10.0.2.15:11902 ... added to expiredFlows (432)
 
 #1200 Packet length: 165 (bytes) | Time received: Fri Nov 13 18:42:13 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (433)
 
 #1201 Packet length: 1484 (bytes) | Time received: Fri Nov 13 18:42:13 2015
@@ -9722,7 +9718,6 @@ Connection time: 292823 (360332 - 67509) [miliseconds]
 UDP PACKET 213.46.172.37:18736 -> 10.0.2.15:18224 ... added to expiredFlows (539)
 
 #2670 Packet length: 172 (bytes) | Time received: Fri Nov 13 18:42:22 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.37:0 ... added to expiredFlows (540)
 
 #2671 Packet length: 156 (bytes) | Time received: Fri Nov 13 18:42:22 2015
@@ -13587,7 +13582,6 @@ Connection time: 2726 (336517 - 333791) [miliseconds]
 UDP PACKET 213.46.172.36:24912 -> 10.0.2.15:29554 ... added to expiredFlows (645)
 
 #3714 Packet length: 156 (bytes) | Time received: Fri Nov 13 18:42:25 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (646)
 
 #3715 Packet length: 60 (bytes) | Time received: Fri Nov 13 18:42:25 2015
@@ -15505,7 +15499,6 @@ TCP PACKET 95.172.94.13:9785 -> 10.0.2.15:15718 ... new flow record created in p
 UDP PACKET 213.46.172.36:9785 -> 10.0.2.15:15718 ... added to expiredFlows (755)
 
 #4209 Packet length: 201 (bytes) | Time received: Fri Nov 13 18:42:26 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (756)
 
 #4210 Packet length: 60 (bytes) | Time received: Fri Nov 13 18:42:26 2015
@@ -18646,7 +18639,6 @@ UDP PACKET 213.46.172.37:25595 -> 10.0.2.15:59613 ... added to expiredFlows (821
 UDP PACKET 213.46.172.36:25595 -> 10.0.2.15:59613 ... added to expiredFlows (822)
 
 #4849 Packet length: 163 (bytes) | Time received: Fri Nov 13 18:42:47 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (823)
 
 #4850 Packet length: 147 (bytes) | Time received: Fri Nov 13 18:42:47 2015
@@ -28127,7 +28119,6 @@ UDP PACKET 213.46.172.37:54829 -> 10.0.2.15:3881 ... added to expiredFlows (928)
 UDP PACKET 213.46.172.36:54829 -> 10.0.2.15:3881 ... added to expiredFlows (929)
 
 #7221 Packet length: 158 (bytes) | Time received: Fri Nov 13 18:42:54 2015
-ICMP PACKET
 ICMP PACKET 10.0.2.15:0 -> 213.46.172.36:0 ... added to expiredFlows (930)
 
 #7222 Packet length: 142 (bytes) | Time received: Fri Nov 13 18:42:54 2015

@@ -15,6 +15,7 @@
 #include <arpa/inet.h>	// inet_ntoa
 #include <sys/socket.h>
 
+#include <sstream>
 
 // Get opts parameter definitions
 #define optarg_no 0
@@ -70,7 +71,7 @@ struct T_Flows
 	u_int	packetCount = 0;
 	u_int 	bytesTransfered = 0;
 
-	bool	flowExpired;
+	bool	flowExpired = false;
 
 
 	const char* prettySourceAddress;
@@ -80,27 +81,6 @@ struct T_Flows
 T_Parameters Parameters;
 vector<T_Flows> processedFlows;
 vector<T_Flows> expiredFlows;
-
-/*void createFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, struct timeval startTime)
-{
-	T_Flows newFlow;
-	newFlow.sourceAddress = sourceAddress;
-	newFlow.destinationAddress = destinationAddress;
-	newFlow.sourcePort = sourcePort;
-	newFlow.destinationPort = destinationPort;
-	newFlow.protocolType = protocolType;
-	newFlow.bytesTransfered = bytesTransfered;
-	newFlow.packetCount++;
-	newFlow.flowExpired = false;
-
-	// Startime + last packet arrival
-	newFlow.startTime.tv_sec = startTime.tv_sec;
-	newFlow.startTime.tv_usec = startTime.tv_usec;
-	newFlow.lastPacketArrival.tv_sec = startTime.tv_sec;
-	newFlow.lastPacketArrival.tv_usec = startTime.tv_usec;
-
-	processedFlows.push_back(newFlow);
-}*/
 
 void createDebugFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, struct timeval startTime, const char* prettySourceAddress, const char* prettyDestinationAddress)
 {
@@ -142,6 +122,19 @@ void updateFlow();
 void ParamInit();
 void testParamInit(T_Parameters params);
 
+double doubleTime(long timeSec, long timeMSec)
+{
+	stringstream sstm;
+	string aux = "0.";
+	string results;
+	sstm << aux << timeMSec;
+	results = sstm.str();
+
+	double realMSec = stod(results);
+
+	double result = timeSec + realMSec;
+	return result;
+}
 
 void debug_PrintFlowInfo(vector<T_Flows>::iterator it);
 void debug_PrintFlowInfo(vector<T_Flows>::iterator it)
@@ -260,22 +253,162 @@ int main(int argc, char * argv[])
 
 /// READING A PCAP FILE (TODO: AGGREGATE TO FLOWS)
 
+
+	long intervalStartTimeSec;
+	long intervalStartTimeMsec;
+	bool recordNewInterval = true;
+
 	// Looping through the records
 	int packetCount = 0;
 	while((packet = pcap_next(handle, &header)) != NULL)
 	{
+
+		if(recordNewInterval)
+		{
+			intervalStartTimeSec = header.ts.tv_sec;
+			intervalStartTimeMsec = header.ts.tv_usec;
+			recordNewInterval = false;
+		}
+
 		packetCount++;
+
+		// Flow control variable by which I switch
+		eptr = (struct ether_header *) packet;
 
 		// Current packet information printed out
 		cout << "#" << packetCount << " Packet length: " << header.len << " (bytes) | Time received: " << ctime((const time_t*)&header.ts.tv_sec);
 
-		eptr = (struct ether_header *) packet;
+
+		// With each packet -> check all the flows, if there is one that expired, make it expired
+
+			// store time of the current packet
+			// loop through all the flows and compare times
+			// if time difference between flows is greater than tcp-timeout, expire the flow
+			long currentTimeSec 	=	header.ts.tv_sec;
+			long currentTimeMiliSec	=	header.ts.tv_usec;
+
+			for(vector<T_Flows>::iterator it = processedFlows.begin(); it != processedFlows.end(); ++it)
+			{
+
+				// Check if this packet violates interval - if so, export expired flows 															  && if there is nothing to be exported, there is no point in exporting it
+				if((doubleTime(header.ts.tv_sec, header.ts.tv_usec) - doubleTime(intervalStartTimeSec, intervalStartTimeMsec)) >= Parameters.interval && !expiredFlows.empty())
+				{
+					// Export it
+					cout << "It was about time to export some packets from expiredFlows:" << endl;
+					for(vector<T_Flows>::iterator it2 = expiredFlows.begin(); it2 != expiredFlows.end(); ++it2)
+					{
+						cout << "\t Flow " << it2->prettySourceAddress << ":" << it2->sourcePort << "->" << it2->prettyDestinationAddress << ":" << it2->destinationPort << "(TP:" << it2->protocolType << ") ... exported" << endl;
+
+						// TODO: EXPORT EXPIRED, REMOVE EXPIRED FROM VECTOR
+					}
+					recordNewInterval = true;
+				}
+
+
+				// This is relevant to tcpTimeout
+				double timeIdle = (doubleTime(currentTimeSec, currentTimeMiliSec) - doubleTime(it->lastPacketArrival.tv_sec, it->lastPacketArrival.tv_usec));
+
+				cout << "Flow ID: " << it->prettySourceAddress << ":" << it->sourcePort << " -> " << it->prettyDestinationAddress << ":" << it->destinationPort << "(PT: " << it->protocolType << ")" << endl;
+				cout << "Idle time: " << timeIdle  << endl;
+				
+				// This only evaluates true when timeout is reached/exceeded 
+				if(timeIdle >= Parameters.timeout)
+				{
+					cout << "This packet triggered expiration (TCPTIMEOUT) of the flow identified by: " << it->prettySourceAddress << ":" << it->sourcePort << " -> " << it->prettyDestinationAddress << ":" << it->destinationPort << "(PT: " << it->protocolType << ")" << endl;	
+					expiredFlows.push_back(*it);
+					processedFlows.erase(it);
+				}
+
+
+				// Case where internal memory for flow storage reaches its maximum limit (given by param -m / --max-flows)
+				if( (expiredFlows.size() + processedFlows.size()) >= Parameters.maxFlows )
+				{
+					// None of the flows is expired yet
+					if(expiredFlows.size() == 0)
+					{
+
+						//cout << "All the considered packets:\n";
+						
+						// Force expire the first (oldest) flow recorded - but first I gotta find it
+						
+						long oldestFoundSec = currentTimeSec;
+						long oldestFoundMSec = currentTimeMiliSec;
+						vector<T_Flows>::iterator auxIter;
+
+						for(vector<T_Flows>::iterator it2 = processedFlows.begin(); it2 != processedFlows.end(); ++it2)
+						{
+							if( (it2->startTime.tv_sec < oldestFoundSec) || ( it2->startTime.tv_sec == oldestFoundSec && it2->startTime.tv_usec < oldestFoundMSec))
+							{
+								oldestFoundSec = it2->startTime.tv_sec;
+								oldestFoundMSec = it2->startTime.tv_usec;
+								auxIter = it2;
+							}
+
+							//cout << "\t: " << it2->startTime.tv_sec << "(" << it2->startTime.tv_usec << ")" << endl;
+							// I would say it is safe to say that at the moment it is capable of finding the oldest flow
+						}
+
+						cout << "The oldest found non-expired packet sits  with time of " << oldestFoundSec << "(" << oldestFoundMSec << ")" << endl;
+
+						// Move auxIter to expiredflows
+						//cout << "expired before " << expiredFlows.size() << " processedFlows before " << processedFlows.size() << endl;
+						expiredFlows.push_back(*auxIter);
+						processedFlows.erase(auxIter);
+						//cout << "expired after " << expiredFlows.size() << " processedFlows after " << processedFlows.size() << endl;
+					}
+
+					cout << endl << "processedSize " << processedFlows.size() << " expiredFlowsSize" << expiredFlows.size() << endl; 
+					cout << "=== EXPORT OCCURED ===" << endl;
+
+					// loop through expiredFlows, export them, delete them
+					vector<T_Flows>:: iterator exIt = expiredFlows.begin();
+
+					/*while(exIt != expiredFlows.end())
+					{
+						cout << "[";
+
+							cout << exIt->prettySourceAddress << ":" << exIt->sourcePort << "->" << exIt->prettyDestinationAddress << ":" << exIt->destinationPort << "(" << exIt->protocolType << ")";
+
+						cout << "]" << endl;
+
+						// Remove it from the expiredFlows struct
+						expiredFlows.erase(exIt);
+						cout << "...and erased..." << endl;
+
+					}*/
+
+					for(vector<T_Flows>::iterator exIt = expiredFlows.begin(); exIt != expiredFlows.end(); ++exIt)
+					{
+						cout << "[";
+
+							cout << exIt->prettySourceAddress << ":" << exIt->sourcePort << "->" << exIt->prettyDestinationAddress << ":" << exIt->destinationPort << "(" << exIt->protocolType << ")";
+
+						cout << "]" << endl;
+
+						
+					}
+
+					expiredFlows.clear();
+					cout << "processedSize " << processedFlows.size() << " expiredFlowsSize" << expiredFlows.size() << endl; 
+
+
+					cout << "======================" << endl;
+					// Export anyways
+					// TODO EXPORT
+
+					break;
+
+				}
+
+			}
+
+
+		my_ip = (struct ip*) (packet+14);		
+
 
 		switch(ntohs(eptr->ether_type))
 		{
 			case ETHERTYPE_IP:
-
-				my_ip = (struct ip*) (packet+14);
 
 				switch(my_ip->ip_p)
 				{
@@ -303,6 +436,8 @@ int main(int argc, char * argv[])
 
 						// Creation & Information about whats going on
 						createDebugFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress);
+						
+						cout << "TIME ATM: " << header.ts.tv_sec << ":" << header.ts.tv_usec << endl;
 						cout << "ICMP PACKET " << prettySourceAddress << ":" << sourcePort << " -> " << prettyDestinationAddress << ":" << destinationPort  << " ... added to expiredFlows (" << expiredFlows.size() << ")" << endl;
 
 					break;
@@ -414,6 +549,7 @@ int main(int argc, char * argv[])
 
 								//cout << "Source address: " << prettySourceAddress << " Destination address: " << prettyDestinationAddress << endl;
 								//cout << "Source port: "	<<  sourcePort	<< " Destination port: " << destinationPort << endl;
+								//cout << "TIME ATM: " << header.ts.tv_sec << ":" << header.ts.tv_usec << endl;
 								cout << "TCP PACKET " << prettySourceAddress << ":" << sourcePort << " -> " << prettyDestinationAddress << ":" << destinationPort;
 
 						// Check if flow exists
@@ -449,13 +585,17 @@ int main(int argc, char * argv[])
 										it->lastPacketArrival.tv_sec = header.ts.tv_sec;
 										it->lastPacketArrival.tv_usec = header.ts.tv_usec;
 
-
+										cout << "TIME ATM: " << header.ts.tv_sec << ":" << header.ts.tv_usec << endl;
+										cout << "TIME INSTRUCT" << it->lastPacketArrival.tv_sec << ":" << it->lastPacketArrival.tv_usec << endl;
 										cout << " ... already exists, updated statistics of processedFlows (" << processedFlows.size() << ")"  << endl;
 
 										cout << "Packets in this flow: " << it->packetCount << endl;
 										cout << "Transfered in total: " << it->bytesTransfered  << " (bytes) " << endl;
-										cout << "Connection time: " << (it->lastPacketArrival.tv_sec - it->startTime.tv_sec) << " (" << it->lastPacketArrival.tv_sec << " - " << it->startTime.tv_sec << ") [seconds]" << endl;
-										cout << "Connection time: " << (it->lastPacketArrival.tv_usec - it->startTime.tv_usec) << " (" << it->lastPacketArrival.tv_usec << " - " << it->startTime.tv_usec << ") [miliseconds]" << endl;
+										cout << "Connection time: " << (doubleTime(it->lastPacketArrival.tv_sec, it->lastPacketArrival.tv_usec) - doubleTime(it->startTime.tv_sec, it->startTime.tv_usec)) << endl;
+										
+
+										//cout << "Connection time: " << (it->lastPacketArrival.tv_sec - it->startTime.tv_sec) << " (" << it->lastPacketArrival.tv_sec << " - " << it->startTime.tv_sec << ") [seconds]" << endl;
+										//cout << "Connection time: " << (it->lastPacketArrival.tv_usec - it->startTime.tv_usec) << " (" << it->lastPacketArrival.tv_usec << " - " << it->startTime.tv_usec << ") [miliseconds]" << endl;
 
 										// Do not create another flow record, terminate the for loop (optimalization)
 										createNewFlow = false;

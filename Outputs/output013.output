@@ -1,0 +1,209 @@
+#1 Packet length: 74 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Before entering for:1442473189,947256
+TIME ATM: 1442473189:947256
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#2 Packet length: 74 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Before entering for:1442473189,947267
+MSEC: 947267 - 947256
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 11
+All the considered packets:
+	: 1442473189(947256)
+The oldest found non-expired packet sits  with time of 1442473189(947256)
+TIME ATM: 1442473189:947267
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... new flow record created in processedFlows (2)
+
+#3 Packet length: 66 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Before entering for:1442473189,947382
+MSEC: 947382 - 947256
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 126
+All the considered packets:
+	: 1442473189(947256)
+	: 1442473189(947267)
+The oldest found non-expired packet sits  with time of 1442473189(947256)
+MSEC: 947382 - 947267
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0 and ms: 115
+All the considered packets:
+	: 1442473189(947256)
+	: 1442473189(947267)
+The oldest found non-expired packet sits  with time of 1442473189(947256)
+TIME ATM: 1442473189:947382
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0TIME ATM: 1442473189:947382
+TIME INSTRUCT1442473189:947382
+ ... already exists, updated statistics of processedFlows (2)
+Packets in this flow: 2
+Transfered in total: 140 (bytes) 
+Connection time: 0 (1442473189 - 1442473189) [seconds]
+Connection time: 126 (947382 - 947256) [miliseconds]
+
+#4 Packet length: 86 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Before entering for:1442473198,336637
+MSEC: 336637 - 947382
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 9 and ms: -610745
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+TIME ATM: 1442473198:336637
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... new flow record created in processedFlows (2)
+
+#5 Packet length: 86 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Before entering for:1442473198,336667
+MSEC: 336667 - 947267
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 9 and ms: -610600
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+TIME ATM: 1442473198:336667
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... new flow record created in processedFlows (2)
+
+#6 Packet length: 66 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Before entering for:1442473198,336839
+MSEC: 336839 - 336637
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 202
+MSEC: 336839 - 336667
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0 and ms: 172
+TIME ATM: 1442473198:336839
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0TIME ATM: 1442473198:336839
+TIME INSTRUCT1442473198:336839
+ ... already exists, updated statistics of processedFlows (2)
+Packets in this flow: 2
+Transfered in total: 152 (bytes) 
+Connection time: 0 (1442473198 - 1442473198) [seconds]
+Connection time: 202 (336839 - 336637) [miliseconds]
+
+#7 Packet length: 77 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Before entering for:1442473204,127397
+MSEC: 127397 - 336839
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 6 and ms: -209442
+It was about time to export some packets from expiredFlows:
+	 Flow 147.229.176.19:0->147.229.12.101:0(TP:6) ... exported
+	 Flow 147.229.12.101:0->147.229.176.19:0(TP:6) ... exported
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+TIME ATM: 1442473204:127397
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... new flow record created in processedFlows (2)
+
+#8 Packet length: 77 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Before entering for:1442473204,127424
+MSEC: 127424 - 336667
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 6 and ms: -209243
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+TIME ATM: 1442473204:127424
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... new flow record created in processedFlows (2)
+
+#9 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Before entering for:1442473204,127530
+MSEC: 127530 - 127397
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 133
+MSEC: 127530 - 127424
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0 and ms: 106
+TIME ATM: 1442473204:127530
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0TIME ATM: 1442473204:127530
+TIME INSTRUCT1442473204:127530
+ ... already exists, updated statistics of processedFlows (2)
+Packets in this flow: 2
+Transfered in total: 143 (bytes) 
+Connection time: 0 (1442473204 - 1442473204) [seconds]
+Connection time: 133 (127530 - 127397) [miliseconds]
+
+#10 Packet length: 85 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Before entering for:1442473211,11859
+MSEC: 11859 - 127530
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 7 and ms: -115671
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+TIME ATM: 1442473211:11859
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... new flow record created in processedFlows (2)
+
+#11 Packet length: 85 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Before entering for:1442473211,11883
+MSEC: 11883 - 127424
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 7 and ms: -115541
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+TIME ATM: 1442473211:11883
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... new flow record created in processedFlows (2)
+
+#12 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Before entering for:1442473211,11986
+MSEC: 11986 - 11859
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 127
+MSEC: 11986 - 11883
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0 and ms: 103
+TIME ATM: 1442473211:11986
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0TIME ATM: 1442473211:11986
+TIME INSTRUCT1442473211:11986
+ ... already exists, updated statistics of processedFlows (2)
+Packets in this flow: 2
+Transfered in total: 151 (bytes) 
+Connection time: 0 (1442473211 - 1442473211) [seconds]
+Connection time: 127 (11986 - 11859) [miliseconds]
+
+#13 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Before entering for:1442473212,693192
+MSEC: 693192 - 11986
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 1 and ms: 681206
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+TIME ATM: 1442473212:693192
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... new flow record created in processedFlows (2)
+
+#14 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Before entering for:1442473212,693203
+MSEC: 693203 - 11883
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 1 and ms: 681320
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+TIME ATM: 1442473212:693203
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... new flow record created in processedFlows (2)
+
+#15 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Before entering for:1442473212,693216
+MSEC: 693216 - 693192
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 24
+MSEC: 693216 - 693203
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0 and ms: 13
+TIME ATM: 1442473212:693216
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0TIME ATM: 1442473212:693216
+TIME INSTRUCT1442473212:693216
+ ... already exists, updated statistics of processedFlows (2)
+Packets in this flow: 2
+Transfered in total: 132 (bytes) 
+Connection time: 0 (1442473212 - 1442473212) [seconds]
+Connection time: 13 (693216 - 693203) [miliseconds]
+
+#16 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Before entering for:1442473212,693290
+MSEC: 693290 - 693192
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0 and ms: 98
+MSEC: 693290 - 693216
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0 and ms: 74
+TIME ATM: 1442473212:693290
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0TIME ATM: 1442473212:693290
+TIME INSTRUCT1442473212:693290
+ ... already exists, updated statistics of processedFlows (2)
+Packets in this flow: 2
+Transfered in total: 132 (bytes) 
+Connection time: 0 (1442473212 - 1442473212) [seconds]
+Connection time: 98 (693290 - 693192) [miliseconds]
+
+Total stats: 
+ 	IGMP: 0x
+	TCP: 16x
+	UDP: 0x
+	ARP: 0x
+	ICMP: 0x
+	Others: 0x
+	

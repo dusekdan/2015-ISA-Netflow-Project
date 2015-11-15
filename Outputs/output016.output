@@ -1,0 +1,191 @@
+#1 Packet length: 74 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#2 Packet length: 74 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 1.09673e-05
+The oldest found non-expired packet sits  with time of 1442473189(947256)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... added first record to processedFlows (1)
+
+#3 Packet length: 66 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0.000114918
+The oldest found non-expired packet sits  with time of 1442473189(947267)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.12.101:0->147.229.176.19:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#4 Packet length: 86 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 8.38926
+This packet triggered expiration (TCPTIMEOUT) of the flow identified by: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#5 Packet length: 86 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 3.00407e-05
+The oldest found non-expired packet sits  with time of 1442473198(336637)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... added first record to processedFlows (1)
+
+#6 Packet length: 66 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0.0001719
+The oldest found non-expired packet sits  with time of 1442473198(336667)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.12.101:0->147.229.176.19:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#7 Packet length: 77 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 5.79056
+The oldest found non-expired packet sits  with time of 1442473198(336839)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#8 Packet length: 77 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 2.69413e-05
+The oldest found non-expired packet sits  with time of 1442473204(127397)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... added first record to processedFlows (1)
+
+#9 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0.000106096
+The oldest found non-expired packet sits  with time of 1442473204(127424)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.12.101:0->147.229.176.19:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#10 Packet length: 85 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 6.99106
+The oldest found non-expired packet sits  with time of 1442473204(127530)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#11 Packet length: 85 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 0.000239849
+The oldest found non-expired packet sits  with time of 1442473211(11859)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... added first record to processedFlows (1)
+
+#12 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 0.00102997
+The oldest found non-expired packet sits  with time of 1442473211(11883)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.12.101:0->147.229.176.19:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#13 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 1.57333
+The oldest found non-expired packet sits  with time of 1442473211(11986)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+#14 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.176.19:0 -> 147.229.12.101:0(PT: 6)
+Idle time: 1.09673e-05
+The oldest found non-expired packet sits  with time of 1442473212(693192)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.176.19:0->147.229.12.101:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... added first record to processedFlows (1)
+
+#15 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 1.3113e-05
+The oldest found non-expired packet sits  with time of 1442473212(693203)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.12.101:0->147.229.176.19:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.12.101:0 -> 147.229.176.19:0 ... added first record to processedFlows (1)
+
+#16 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.12.101:0 -> 147.229.176.19:0(PT: 6)
+Idle time: 7.39098e-05
+The oldest found non-expired packet sits  with time of 1442473212(693216)
+
+processedSize 0 expiredFlowsSize1
+=== EXPORT OCCURED ===
+[147.229.12.101:0->147.229.176.19:0(6)]
+processedSize 0 expiredFlowsSize0
+======================
+TCP PACKET 147.229.176.19:0 -> 147.229.12.101:0 ... added first record to processedFlows (1)
+
+Total stats: 
+ 	IGMP: 0x
+	TCP: 16x
+	UDP: 0x
+	ARP: 0x
+	ICMP: 0x
+	Others: 0x
+	
