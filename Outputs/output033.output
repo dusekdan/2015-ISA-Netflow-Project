@@ -1,0 +1,188 @@
+#1 Packet length: 74 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: 
+ ... added first record to processedFlows/expiredFlows (PF:1 | EF: 0)
+
+#2 Packet length: 74 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 1.09673e-05
+TCP PACKET 147.229.12.101:55815 -> 147.229.176.19:5869
+flags: ACK arrived 
+ ... new flow record created in processedFlows (PF:2 | EF: 0)
+
+#3 Packet length: 66 (bytes) | Time received: Thu Sep 17 08:59:49 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 0.000125885
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 0.000114918
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 2
+	Transfered in total: 140 (bytes) 
+	Connection time: 0.000125885
+
+#4 Packet length: 86 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 8.38926
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 8.38937
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 3
+	Transfered in total: 226 (bytes) 
+	Connection time: 8.38938
+
+#5 Packet length: 86 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 3.00407e-05
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 8.3894
+TCP PACKET 147.229.12.101:55815 -> 147.229.176.19:5869
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 2
+	Transfered in total: 160 (bytes) 
+	Connection time: 8.3894
+
+#6 Packet length: 66 (bytes) | Time received: Thu Sep 17 08:59:58 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 0.000201941
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 0.0001719
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 4
+	Transfered in total: 292 (bytes) 
+	Connection time: 8.38958
+
+#7 Packet length: 77 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 5.79056
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 5.79073
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 5
+	Transfered in total: 369 (bytes) 
+	Connection time: 14.1801
+
+#8 Packet length: 77 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 2.69413e-05
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 5.79076
+TCP PACKET 147.229.12.101:55815 -> 147.229.176.19:5869
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 3
+	Transfered in total: 237 (bytes) 
+	Connection time: 14.1802
+
+#9 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:04 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 0.000133038
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 0.000106096
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 6
+	Transfered in total: 435 (bytes) 
+	Connection time: 14.1803
+
+#10 Packet length: 85 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 6.88433
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 6.88443
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 7
+	Transfered in total: 520 (bytes) 
+	Connection time: 21.0646
+
+#11 Packet length: 85 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 2.40803e-05
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 6.88446
+TCP PACKET 147.229.12.101:55815 -> 147.229.176.19:5869
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 4
+	Transfered in total: 322 (bytes) 
+	Connection time: 21.0646
+
+#12 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:11 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 0.000127077
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 0.000102997
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 8
+	Transfered in total: 586 (bytes) 
+	Connection time: 21.0647
+
+#13 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.176.19:5869 -> 147.229.12.101:55815(PT: 6)
+Idle time: 1.68121
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 1.68131
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: FIN arrived ACK arrived 
+FIN REACHED - this flow is updated and expired
+ ... already exists, updated statistics of processedFlows (2)
+	Packets in this flow: 9
+	Transfered in total: 652 (bytes) 
+	Connection time: 22.7459
+
+#14 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 1.68132
+TCP PACKET 147.229.12.101:55815 -> 147.229.176.19:5869
+flags: ACK arrived 
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 5
+	Transfered in total: 388 (bytes) 
+	Connection time: 22.7459
+
+#15 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+Flow ID: 147.229.12.101:55815 -> 147.229.176.19:5869(PT: 6)
+Idle time: 1.3113e-05
+TCP PACKET 147.229.12.101:55815 -> 147.229.176.19:5869
+flags: FIN arrived ACK arrived 
+FIN REACHED - this flow is updated and expired
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 6
+	Transfered in total: 454 (bytes) 
+	Connection time: 22.7459
+
+#16 Packet length: 66 (bytes) | Time received: Thu Sep 17 09:00:12 2015
+TCP PACKET 147.229.176.19:5869 -> 147.229.12.101:55815
+flags: ACK arrived 
+ ... added first record to processedFlows/expiredFlows (PF:1 | EF: 2)
+
+=== EXPORT OCCURED (end of file reached) ===
+Packets to be exported: 1
+Exporting packet #0 to collector:
+[147.229.176.19:5869->147.229.12.101:55815(6)]
+[147.229.12.101:55815->147.229.176.19:5869(6)]
+[147.229.176.19:5869->147.229.12.101:55815(6)]
+
+3 packets packed... 
+===========================================
+Total stats: 
+ 	IGMP: 0x
+	TCP: 16x
+	UDP: 0x
+	ARP: 0x
+	ICMP: 0x
+	Others: 0x
+	Totalflows: 3
