@@ -13,9 +13,11 @@
 #include <netinet/udp.h>
 #include <netinet/ip_icmp.h>
 #include <netinet/igmp.h>
+#include <netinet/ether.h>
 #include <netinet/if_ether.h>
 #include <arpa/inet.h>	// inet_ntoa
 #include <sys/socket.h>
+#include <sys/types.h>
 
 #include <sstream>
 
@@ -57,7 +59,8 @@ const struct option longopts[] =
 typedef struct
 {
 	string inputFile;
-	string collectorAddress;
+	string collectorAddress = "127.0.0.1";
+	int port = 2055;
 	int interval;
 	int timeout;
 	int maxFlows;
@@ -97,15 +100,15 @@ struct T_Flows
 
 struct packetHeader
 {
-	uint16_t	version	=	5;
+	uint16_t	version	=	htons(5);
 	uint16_t	count;
 	uint32_t	sysUpTime;
 	uint32_t	unix_secs;
 	uint32_t	unix_nsecs;
 	uint32_t	flow_sequence;
-	uint8_t		engine_type;
-	uint8_t		engine_id;
-	uint16_t	sampling_interval;
+	uint8_t		engine_type = 0;
+	uint8_t		engine_id = 0;
+	uint16_t	sampling_interval	= htons(0);
 
 };
 
@@ -114,8 +117,8 @@ struct packetBody
 	in_addr	srcaddr;
 	in_addr	dstaddr;
 	in_addr	nexthop;
-	uint16_t	input	=	0;
-	uint16_t	output	=	0;
+	uint16_t	input	=	htons(0);
+	uint16_t	output	=	htons(0);
 	uint32_t	dPkts;
 	uint32_t	dOctets;
 	uint32_t	First;
@@ -126,11 +129,11 @@ struct packetBody
 	uint8_t		tcp_flags;
 	uint8_t		prot;
 	uint8_t		tos;
-	uint16_t	src_as 	 =	0;
-	uint16_t	dst_as   =	0;
+	uint16_t	src_as 	 =	htons(0);
+	uint16_t	dst_as   =	htons(0);
 	uint8_t		src_mask =	0;
 	uint8_t		dst_mask = 	0;
-	uint16_t	pad2 	 =	0;	
+	uint16_t	pad2 	 =	htons(0);	
 };
 
 
@@ -260,7 +263,7 @@ void createTCPFlow(in_addr sourceAddress, in_addr destinationAddress, u_short so
 
 	newFlow.tcpFlags = tcpFlags;
 
-	if(tcpFlags.test(0))
+	if(tcpFlags.test(0) || tcpFlags.test(2))
 	{
 		// FIN
 		newFlow.finArrived = true;
@@ -271,6 +274,35 @@ void createTCPFlow(in_addr sourceAddress, in_addr destinationAddress, u_short so
 	{
 		processedFlows.push_back(newFlow);
 	}	
+
+	totalFlowCount++;
+}
+
+
+void createDebugFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, struct timeval startTime, const char* prettySourceAddress, const char* prettyDestinationAddress, uint8_t typeOfService)
+{
+	T_Flows newFlow;
+	newFlow.sourceAddress = sourceAddress;
+	newFlow.destinationAddress = destinationAddress;
+	newFlow.sourcePort = sourcePort;
+	newFlow.destinationPort = destinationPort;
+	newFlow.protocolType = protocolType;
+	newFlow.bytesTransfered = bytesTransfered;
+	newFlow.packetCount++;
+	newFlow.flowExpired = false;
+
+	// Startime + last packet arrival
+	newFlow.startTime.tv_sec = startTime.tv_sec;
+	newFlow.startTime.tv_usec = startTime.tv_usec;
+	newFlow.lastPacketArrival.tv_sec = startTime.tv_sec;
+	newFlow.lastPacketArrival.tv_usec = startTime.tv_usec;
+
+	// For debugging purposes, I use pretty source address to be able to compare what am I actually putting in
+	newFlow.prettySourceAddress = prettySourceAddress;
+	newFlow.prettyDestinationAddress = prettyDestinationAddress;
+
+	newFlow.flowExpired = true;
+	expiredFlows.push_back(newFlow);
 
 	totalFlowCount++;
 }
@@ -315,42 +347,7 @@ void processPacketCheck(struct pcap_pkthdr header, long intervalStartTimeSec, lo
 	}
 }
 
-void createDebugFlow(in_addr sourceAddress, in_addr destinationAddress, u_short sourcePort, u_short destinationPort, u_int protocolType, u_int bytesTransfered, struct timeval startTime, const char* prettySourceAddress, const char* prettyDestinationAddress, uint8_t typeOfService)
-{
-	T_Flows newFlow;
-	newFlow.sourceAddress = sourceAddress;
-	newFlow.destinationAddress = destinationAddress;
-	newFlow.sourcePort = sourcePort;
-	newFlow.destinationPort = destinationPort;
-	newFlow.protocolType = protocolType;
-	newFlow.bytesTransfered = bytesTransfered;
-	newFlow.packetCount++;
-	newFlow.flowExpired = false;
 
-	// Startime + last packet arrival
-	newFlow.startTime.tv_sec = startTime.tv_sec;
-	newFlow.startTime.tv_usec = startTime.tv_usec;
-	newFlow.lastPacketArrival.tv_sec = startTime.tv_sec;
-	newFlow.lastPacketArrival.tv_usec = startTime.tv_usec;
-
-	// For debugging purposes, I use pretty source address to be able to compare what am I actually putting in
-	newFlow.prettySourceAddress = prettySourceAddress;
-	newFlow.prettyDestinationAddress = prettyDestinationAddress;
-
-	// UDP & ICMP goes to expired instantly
-	if(protocolType == 17 || protocolType == 1)
-	{
-		// Expired should be expired
-		newFlow.flowExpired = true;
-		expiredFlows.push_back(newFlow);
-	}
-	else
-	{
-		processedFlows.push_back(newFlow);
-	}
-
-	totalFlowCount++;
-}
 
 
 
@@ -411,6 +408,8 @@ void expireLongestInactiveConnection(long currentTimeSec, long currentTimeMiliSe
 
 long firstPacketTimeSec;
 long firstPacketTimeMSec;
+long currentPacketTimeSec;
+long currentPacketTimeMSec;
 
 
 int main(int argc, char * argv[])
@@ -549,11 +548,15 @@ int main(int argc, char * argv[])
 			firstRun = false;
 		}
 
+		currentPacketTimeSec 	=	header.ts.tv_sec;
+		currentPacketTimeMSec 	=	header.ts.tv_usec;
+
 		// Flow control variable (ethernet header)
 		eptr = (struct ether_header *) packet;
 
 		// Current packet information printed out
 		cout << "#" << packetCount << " Packet length: " << header.len << " (bytes) | Time received: " << ctime((const time_t*)&header.ts.tv_sec);
+		cout << "ProcessedFlows: " << processedFlows.size() << "| ExpiredFlows: " << expiredFlows.size() << endl;
 
 
 		// With each packet -> check all the flows; expire expired flows, export when interval runs out
@@ -625,8 +628,9 @@ int main(int argc, char * argv[])
 						// In case that vector is empty, I add T_Flows record right away
 						if(processedFlows.empty())
 						{
+
 							createTCPFlow(sourceAddress, destinationAddress, sourcePort, destinationPort, protocolType, bytesTransfered, header.ts, prettySourceAddress, prettyDestinationAddress, tcpFlags, my_ip->ip_tos, my_tcp->th_flags);
-		
+
 							cout << " ... added first record to processedFlows/expiredFlows (PF:" << processedFlows.size() << " | EF: "<< expiredFlows.size() <<")" << endl;
 						}
 						// Flows are not empty
@@ -645,13 +649,14 @@ int main(int argc, char * argv[])
 								// Case where internal memory for flow storage reaches its maximum limit (given by param -m / --max-flows)
 								if(processedFlows.size() >= Parameters.maxFlows)
 								{
-									// None of the flows is expired yet
-									if(expiredFlows.size() == 0)
-									{
-										// Force expire the first (oldest) flow recorded
-										expireLongestInactiveConnection(currentTimeSec, currentTimeMiliSec);
-									}
-									break;
+
+									cout << "MAX FLOW REACHED" << processedFlows.size() << endl;
+
+									
+									// Force expire the first (oldest) flow recorded
+									expireLongestInactiveConnection(currentTimeSec, currentTimeMiliSec);
+									
+									
 								}
 
 								// Creates flow record for the current tuple
@@ -784,21 +789,21 @@ void exportFlows()
 				// Destination address
 				outPacket.pBody[flowsPacked].dstaddr = flow->destinationAddress;
 				// Packet count
-				outPacket.pBody[flowsPacked].dPkts	 = flow->packetCount;
+				outPacket.pBody[flowsPacked].dPkts	 = htonl(flow->packetCount);
 				// Bytes transfered (Octet == Byte, caused by historic inconsistency)
-				outPacket.pBody[flowsPacked].dOctets = flow->bytesTransfered;
+				outPacket.pBody[flowsPacked].dOctets = htonl(flow->bytesTransfered);
 
 				uint32_t auxFirstTime = (uint32_t) ((doubleTime(flow->startTime.tv_sec, flow->startTime.tv_usec) - doubleTime(firstPacketTimeSec, firstPacketTimeMSec))*1000);
-				outPacket.pBody[flowsPacked].First 	= auxFirstTime;
+				outPacket.pBody[flowsPacked].First 	= htonl(auxFirstTime);
 
 				uint32_t auxLastTime = (uint32_t)  ((doubleTime(flow->lastPacketArrival.tv_sec, flow->lastPacketArrival.tv_usec) - doubleTime(firstPacketTimeSec, firstPacketTimeMSec))*1000);	
-				outPacket.pBody[flowsPacked].Last 	= auxLastTime;
+				outPacket.pBody[flowsPacked].Last 	= htonl(auxLastTime);
 
 
 				// Source port
-				outPacket.pBody[flowsPacked].srcport  = flow->sourcePort;
+				outPacket.pBody[flowsPacked].srcport  = htons(flow->sourcePort);
 				// Destination port
-				outPacket.pBody[flowsPacked].dstport  = flow->destinationPort;
+				outPacket.pBody[flowsPacked].dstport  = htons(flow->destinationPort);
 				// TCP Flags
 				outPacket.pBody[flowsPacked].tcp_flags = flow->tcpFlagsForCollector;
 				// Protocol type (UDP/IGMP/ICMP/TCP)
@@ -814,8 +819,57 @@ void exportFlows()
 				flowsPacked++;
 			}
 
+			cout << endl << flowsPacked << " packets packed... " << endl;
+
 
 			// Here the packet header should be created
+			
+			// Flows packed to this packet
+			outPacket.pHeader.count		=	htons(flowsPacked);
+
+			// SysUpTime
+			uint32_t auxSysUpTime	=	(uint32_t) ((double)(doubleTime(currentPacketTimeSec, currentPacketTimeMSec) - doubleTime(firstPacketTimeSec, firstPacketTimeMSec))*1000);
+			outPacket.pHeader.sysUpTime	=	htonl(auxSysUpTime);
+
+			// unix_secs
+			outPacket.pHeader.unix_secs  = htonl(currentPacketTimeSec);
+			// unix_nsecs
+			outPacket.pHeader.unix_nsecs = htonl((currentPacketTimeMSec/1000));
+
+			// Flow sequence
+			outPacket.pHeader.flow_sequence = htonl(totalFlowCount);
+			
+
+			// Header completed, now send
+
+			//SOKETY TADY
+			// Prebrano z projektu do IPK (meho, lonskeho) START
+			int comSock;
+			sockaddr_in RecvAddr;
+
+			if((comSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
+			{
+				cerr << "NOT ABLE TO CREATE SOCKET" << endl;
+			}
+
+
+			memset(&RecvAddr, 0, sizeof(RecvAddr));
+
+			// Basically: RecvAddr.sin_addr = Parameters.collectorAddress; 
+			inet_pton(AF_INET, Parameters.collectorAddress.c_str(), &(RecvAddr.sin_addr));
+			
+			RecvAddr.sin_port = htons(Parameters.port);
+			RecvAddr.sin_family = AF_INET;
+
+			int packetSizeInTotal = (flowsPacked*sizeof(struct packetBody)) + sizeof(struct packetHeader);
+
+			if((sendto(comSock, &outPacket, packetSizeInTotal, 0, (const sockaddr *) &RecvAddr, sizeof(RecvAddr))) == -1)
+			{
+				cerr << "SENDING FAILED" << endl;
+			}
+
+
+
 
 
 	}
