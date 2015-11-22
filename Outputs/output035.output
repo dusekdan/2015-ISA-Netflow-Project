@@ -1,0 +1,687 @@
+#1 Packet length: 77 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 0| ExpiredFlows: 0
+UDP PACKET 10.0.2.15:49204 -> 213.46.172.37:13568 ... added to expiredFlows (1)
+
+#2 Packet length: 77 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 0| ExpiredFlows: 1
+UDP PACKET 10.0.2.15:21983 -> 213.46.172.37:13568 ... added to expiredFlows (2)
+
+#3 Packet length: 380 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 0| ExpiredFlows: 2
+ ... added first record to processedFlows/expiredFlows (PF:1 | EF: 2)
+
+#4 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 2
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000310898
+MAX FLOW REACHED1
+1448035861.230323 < 1448035861.230634
+The oldest found non-expired packet sits  with time of 1448035861(230323)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 3)
+
+#5 Packet length: 361 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 3
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000229
+MAX FLOW REACHED1
+1448035861.230634 < 1448035861.230863
+The oldest found non-expired packet sits  with time of 1448035861(230634)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 4)
+
+#6 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 4
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000202
+MAX FLOW REACHED1
+1448035861.230863 < 1448035861.231065
+The oldest found non-expired packet sits  with time of 1448035861(230863)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 5)
+
+#7 Packet length: 126 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 5
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.017016
+UDP PACKET 213.46.172.37:13568 -> 10.0.2.15:49204 ... added to expiredFlows (6)
+
+#8 Packet length: 138 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 6
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.017715
+UDP PACKET 213.46.172.37:13568 -> 10.0.2.15:21983 ... added to expiredFlows (7)
+
+#9 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 7
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.021326
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.021326
+
+#10 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 7
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000027
+MAX FLOW REACHED1
+1448035861.252391 < 1448035861.252418
+The oldest found non-expired packet sits  with time of 1448035861(252391)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 8)
+
+#11 Packet length: 816 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 8
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.135236
+MAX FLOW REACHED1
+1448035861.252418 < 1448035861.387654
+The oldest found non-expired packet sits  with time of 1448035861(252418)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 9)
+
+#12 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:01 2015
+ProcessedFlows: 1| ExpiredFlows: 9
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000042
+MAX FLOW REACHED1
+1448035861.387654 < 1448035861.387696
+The oldest found non-expired packet sits  with time of 1448035861(387654)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 10)
+
+#13 Packet length: 393 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 10
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 2.188566
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 447 (bytes) 
+	Connection time: 2.188566
+
+#14 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 10
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000367
+MAX FLOW REACHED1
+1448035863.576262 < 1448035863.576629
+The oldest found non-expired packet sits  with time of 1448035863(576262)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 11)
+
+#15 Packet length: 1068 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 11
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000069
+MAX FLOW REACHED1
+1448035863.576629 < 1448035863.576698
+The oldest found non-expired packet sits  with time of 1448035863(576629)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 12)
+
+#16 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 12
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000179
+MAX FLOW REACHED1
+1448035863.576698 < 1448035863.576877
+The oldest found non-expired packet sits  with time of 1448035863(576698)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 13)
+
+#17 Packet length: 77 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 13
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000673
+UDP PACKET 10.0.2.15:3015 -> 213.46.172.37:13568 ... added to expiredFlows (14)
+
+#18 Packet length: 77 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 14
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000930
+UDP PACKET 10.0.2.15:34202 -> 213.46.172.37:13568 ... added to expiredFlows (15)
+
+#19 Packet length: 138 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 15
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.013367
+UDP PACKET 213.46.172.37:13568 -> 10.0.2.15:34202 ... added to expiredFlows (16)
+
+#20 Packet length: 126 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 16
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.014524
+UDP PACKET 213.46.172.37:13568 -> 10.0.2.15:3015 ... added to expiredFlows (17)
+
+#21 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 17
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.017632
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.017632
+
+#22 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 17
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000035
+MAX FLOW REACHED1
+1448035863.594509 < 1448035863.594544
+The oldest found non-expired packet sits  with time of 1448035863(594509)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 18)
+
+#23 Packet length: 336 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 18
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.076777
+MAX FLOW REACHED1
+1448035863.594544 < 1448035863.671321
+The oldest found non-expired packet sits  with time of 1448035863(594544)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 19)
+
+#24 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:03 2015
+ProcessedFlows: 1| ExpiredFlows: 19
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000035
+MAX FLOW REACHED1
+1448035863.671321 < 1448035863.671356
+The oldest found non-expired packet sits  with time of 1448035863(671321)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 20)
+
+#25 Packet length: 347 (bytes) | Time received: Fri Nov 20 17:11:05 2015
+ProcessedFlows: 1| ExpiredFlows: 20
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 1.992979
+MAX FLOW REACHED1
+1448035863.671356 < 1448035865.664335
+The oldest found non-expired packet sits  with time of 1448035863(671356)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 21)
+
+#26 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:05 2015
+ProcessedFlows: 1| ExpiredFlows: 21
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000039
+MAX FLOW REACHED1
+1448035865.664335 < 1448035865.664374
+The oldest found non-expired packet sits  with time of 1448035865(664335)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 22)
+
+#27 Packet length: 348 (bytes) | Time received: Fri Nov 20 17:11:05 2015
+ProcessedFlows: 1| ExpiredFlows: 22
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.011749
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 402 (bytes) 
+	Connection time: 0.011749
+
+#28 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:05 2015
+ProcessedFlows: 1| ExpiredFlows: 22
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000488
+MAX FLOW REACHED1
+1448035865.676123 < 1448035865.676611
+The oldest found non-expired packet sits  with time of 1448035865(676123)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 23)
+
+#29 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:05 2015
+ProcessedFlows: 1| ExpiredFlows: 23
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.018376
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.018376
+
+#30 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:05 2015
+ProcessedFlows: 1| ExpiredFlows: 23
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.037927
+MAX FLOW REACHED1
+1448035865.694987 < 1448035865.732914
+The oldest found non-expired packet sits  with time of 1448035865(694987)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 24)
+
+#31 Packet length: 77 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 24
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 3.396973
+UDP PACKET 10.0.2.15:48592 -> 213.46.172.37:13568 ... added to expiredFlows (25)
+
+#32 Packet length: 77 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 25
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 3.397179
+UDP PACKET 10.0.2.15:5594 -> 213.46.172.37:13568 ... added to expiredFlows (26)
+
+#33 Packet length: 292 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 26
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 3.398007
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 346 (bytes) 
+	Connection time: 3.398007
+
+#34 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 26
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000431
+MAX FLOW REACHED1
+1448035869.130921 < 1448035869.131352
+The oldest found non-expired packet sits  with time of 1448035869(130921)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 27)
+
+#35 Packet length: 1278 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 27
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000119
+MAX FLOW REACHED1
+1448035869.131352 < 1448035869.131471
+The oldest found non-expired packet sits  with time of 1448035869(131352)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 28)
+
+#36 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 28
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000260
+MAX FLOW REACHED1
+1448035869.131471 < 1448035869.131731
+The oldest found non-expired packet sits  with time of 1448035869(131471)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 29)
+
+#37 Packet length: 406 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 29
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000045
+MAX FLOW REACHED1
+1448035869.131731 < 1448035869.131776
+The oldest found non-expired packet sits  with time of 1448035869(131731)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 30)
+
+#38 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 30
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000309
+MAX FLOW REACHED1
+1448035869.131776 < 1448035869.132085
+The oldest found non-expired packet sits  with time of 1448035869(131776)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 31)
+
+#39 Packet length: 207 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 31
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.003134
+MAX FLOW REACHED1
+1448035869.132085 < 1448035869.135219
+The oldest found non-expired packet sits  with time of 1448035869(132085)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 32)
+
+#40 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 32
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000271
+MAX FLOW REACHED1
+1448035869.135219 < 1448035869.135490
+The oldest found non-expired packet sits  with time of 1448035869(135219)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 33)
+
+#41 Packet length: 361 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 33
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000052
+MAX FLOW REACHED1
+1448035869.135490 < 1448035869.135542
+The oldest found non-expired packet sits  with time of 1448035869(135490)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 34)
+
+#42 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 34
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000134
+MAX FLOW REACHED1
+1448035869.135542 < 1448035869.135676
+The oldest found non-expired packet sits  with time of 1448035869(135542)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 35)
+
+#43 Packet length: 138 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 35
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.008295
+UDP PACKET 213.46.172.37:13568 -> 10.0.2.15:5594 ... added to expiredFlows (36)
+
+#44 Packet length: 126 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 36
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.009728
+UDP PACKET 213.46.172.37:13568 -> 10.0.2.15:48592 ... added to expiredFlows (37)
+
+#45 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 37
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.013083
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.013083
+
+#46 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 37
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000038
+MAX FLOW REACHED1
+1448035869.148759 < 1448035869.148797
+The oldest found non-expired packet sits  with time of 1448035869(148759)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 38)
+
+#47 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 38
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.018997
+MAX FLOW REACHED1
+1448035869.148797 < 1448035869.167794
+The oldest found non-expired packet sits  with time of 1448035869(148797)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 39)
+
+#48 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 39
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000031
+MAX FLOW REACHED1
+1448035869.167794 < 1448035869.167825
+The oldest found non-expired packet sits  with time of 1448035869(167794)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 40)
+
+#49 Packet length: 347 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 40
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.037643
+MAX FLOW REACHED1
+1448035869.167825 < 1448035869.205468
+The oldest found non-expired packet sits  with time of 1448035869(167825)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 41)
+
+#50 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 41
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000030
+MAX FLOW REACHED1
+1448035869.205468 < 1448035869.205498
+The oldest found non-expired packet sits  with time of 1448035869(205468)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 42)
+
+#51 Packet length: 545 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 42
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.070255
+MAX FLOW REACHED1
+1448035869.205498 < 1448035869.275753
+The oldest found non-expired packet sits  with time of 1448035869(205498)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 43)
+
+#52 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 43
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000037
+MAX FLOW REACHED1
+1448035869.275753 < 1448035869.275790
+The oldest found non-expired packet sits  with time of 1448035869(275753)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 44)
+
+#53 Packet length: 297 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 44
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.009398
+MAX FLOW REACHED1
+1448035869.275790 < 1448035869.285188
+The oldest found non-expired packet sits  with time of 1448035869(275790)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 45)
+
+#54 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 45
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000029
+MAX FLOW REACHED1
+1448035869.285188 < 1448035869.285217
+The oldest found non-expired packet sits  with time of 1448035869(285188)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 46)
+
+#55 Packet length: 348 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 46
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.071636
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 402 (bytes) 
+	Connection time: 0.071636
+
+#56 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 46
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000477
+MAX FLOW REACHED1
+1448035869.356853 < 1448035869.357330
+The oldest found non-expired packet sits  with time of 1448035869(356853)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 47)
+
+#57 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 47
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.021663
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.021663
+
+#58 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 47
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000029
+MAX FLOW REACHED1
+1448035869.378993 < 1448035869.379022
+The oldest found non-expired packet sits  with time of 1448035869(378993)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 48)
+
+#59 Packet length: 1241 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 48
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.102901
+MAX FLOW REACHED1
+1448035869.379022 < 1448035869.481923
+The oldest found non-expired packet sits  with time of 1448035869(379022)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 49)
+
+#60 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 49
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000030
+MAX FLOW REACHED1
+1448035869.481923 < 1448035869.481953
+The oldest found non-expired packet sits  with time of 1448035869(481923)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 50)
+
+#61 Packet length: 428 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 50
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.168144
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 482 (bytes) 
+	Connection time: 0.168144
+
+#62 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 50
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000562
+MAX FLOW REACHED1
+1448035869.650097 < 1448035869.650659
+The oldest found non-expired packet sits  with time of 1448035869(650097)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 51)
+
+#63 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 51
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.016931
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.016931
+
+#64 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 51
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000028
+MAX FLOW REACHED1
+1448035869.667590 < 1448035869.667618
+The oldest found non-expired packet sits  with time of 1448035869(667590)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 52)
+
+#65 Packet length: 325 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 52
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.100338
+MAX FLOW REACHED1
+1448035869.667618 < 1448035869.767956
+The oldest found non-expired packet sits  with time of 1448035869(667618)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 53)
+
+#66 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 53
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000029
+MAX FLOW REACHED1
+1448035869.767956 < 1448035869.767985
+The oldest found non-expired packet sits  with time of 1448035869(767956)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 54)
+
+#67 Packet length: 428 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 54
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.017755
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 482 (bytes) 
+	Connection time: 0.017755
+
+#68 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 54
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000694
+MAX FLOW REACHED1
+1448035869.785740 < 1448035869.786434
+The oldest found non-expired packet sits  with time of 1448035869(785740)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 55)
+
+#69 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 55
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.018685
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.018685
+
+#70 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 55
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.039488
+MAX FLOW REACHED1
+1448035869.805119 < 1448035869.844607
+The oldest found non-expired packet sits  with time of 1448035869(805119)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 56)
+
+#71 Packet length: 340 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 56
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.061090
+MAX FLOW REACHED1
+1448035869.844607 < 1448035869.905697
+The oldest found non-expired packet sits  with time of 1448035869(844607)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 57)
+
+#72 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 57
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000072
+MAX FLOW REACHED1
+1448035869.905697 < 1448035869.905769
+The oldest found non-expired packet sits  with time of 1448035869(905697)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 58)
+
+#73 Packet length: 427 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 58
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.084404
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 481 (bytes) 
+	Connection time: 0.084404
+
+#74 Packet length: 60 (bytes) | Time received: Fri Nov 20 17:11:09 2015
+ProcessedFlows: 1| ExpiredFlows: 58
+Flow ID: 10.0.2.15:64978 -> 31.13.84.8:47873(PT: 6)
+Idle time: 0.000740
+MAX FLOW REACHED1
+1448035869.990173 < 1448035869.990913
+The oldest found non-expired packet sits  with time of 1448035869(990173)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 59)
+
+#75 Packet length: 96 (bytes) | Time received: Fri Nov 20 17:11:10 2015
+ProcessedFlows: 1| ExpiredFlows: 59
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.019028
+ ... already exists, updated statistics of processedFlows (1)
+	Packets in this flow: 2
+	Transfered in total: 156 (bytes) 
+	Connection time: 0.019028
+
+#76 Packet length: 54 (bytes) | Time received: Fri Nov 20 17:11:10 2015
+ProcessedFlows: 1| ExpiredFlows: 59
+Flow ID: 31.13.84.8:47873 -> 10.0.2.15:64978(PT: 6)
+Idle time: 0.000030
+MAX FLOW REACHED1
+1448035870.009941 < 1448035870.009971
+The oldest found non-expired packet sits  with time of 1448035870(9941)
+Probably expiredLongestInactive has been done and now I am here...
+ ... new flow record created in processedFlows (PF:1 | EF: 60)
+
