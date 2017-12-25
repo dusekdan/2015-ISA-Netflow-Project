@@ -3,6 +3,6 @@
 
 ___
 
-# FIT VUT, ITU - Analyzér struktury menu
+# FIT VUT, ISA - Offline NetFlow sonda
 *Školní projekt do předmětu ISA (Síťové aplikace a správa sítí), Fakulta Informačních Technologií, Vysoké Učení Technické Brno.*
 
